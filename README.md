@@ -46,7 +46,7 @@ This VIP supports the following features:
 ---
 
 ## 📁 Directory Structure
-
+```
 sync_fifo_uvm_vip/
 ├── design/
 │   └── rtl.v
@@ -80,3 +80,4 @@ sync_fifo_uvm_vip/
     ├── full_write_test.sv
     ├── empty_read_test.sv
     └── rand_read_write_test.sv
+```
