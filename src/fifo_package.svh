@@ -2,8 +2,13 @@
 `define FIFO_PACKAGE_SVH
 
 package fifo_package;
-    parameter   P_DATA_WIDTH  = 8;
-    parameter   P_FIFO_DEPTH  = 16;
+    `include "uvm_macros.svh"
+    import uvm_pkg::*;
+
+    `include "fifo_define.svh"
+    `include "fifo_interface.sv"
+    `include "fifo_config.sv"
+    `include "fifo_seq_item.sv"
 endpackage
 
 `endif
