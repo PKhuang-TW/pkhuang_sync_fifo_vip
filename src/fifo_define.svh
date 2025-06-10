@@ -1,7 +1,8 @@
 `ifndef FIFO_DEFINE_SVH
 `define FIFO_DEFINE_SVH
 
-parameter   P_DATA_WIDTH  = 8;
-parameter   P_FIFO_DEPTH  = 16;
+`define     D_DATA_WIDTH    8
+`define     D_FIFO_DEPTH    16
+`define     D_ADDR_WIDTH    $clog2(`D_FIFO_DEPTH)
 
 `endif

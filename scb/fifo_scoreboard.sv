@@ -10,7 +10,8 @@ class fifo_scoreboard extends uvm_scoreboard;
     `uvm_analysis_imp_decl(_passive)
 
     bit                                                         wr_en, rd_en, full, empty;
-    bit[P_DATA_WIDTH-1:0]                                       ref_q[$];
+    bit [`D_ADDR_WIDTH-1:0]                                      counter;
+    bit [`D_DATA_WIDTH-1:0]                                      ref_q[$];
 
     fifo_config                                                 cfg;
     virtual fifo_interface                                      vif;

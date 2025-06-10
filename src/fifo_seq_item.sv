@@ -8,10 +8,10 @@ class fifo_seq_item extends uvm_sequence_item;
     // Input
     rand    bit                     wr_en;
     rand    bit                     rd_en;
-    rand    bit[P_DATA_WIDTH-1:0]   din;
+    rand    bit[`D_DATA_WIDTH-1:0]   din;
 
     // Output
-    bit[P_DATA_WIDTH-1:0]           dout;
+    bit[`D_DATA_WIDTH-1:0]           dout;
     bit                             full;
     bit                             empty;
 
