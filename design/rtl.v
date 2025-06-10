@@ -24,7 +24,7 @@ module sync_fifo #(
             w_ptr   <= 0;
         end else if ( wr_en && !full ) begin
             fifo[w_ptr] <= din;
-            w_ptr       <= (w_ptr + 1) % FIFO_DEPTH;
+            w_ptr       <= (w_ptr + 1) & (FIFO_DEPTH - 1);
         end
     end
 
@@ -34,7 +34,7 @@ module sync_fifo #(
             dout    <= 0;
         end else if ( rd_en && !empty ) begin
             dout    <= fifo[r_ptr];
-            r_ptr   <= (r_ptr + 1) % FIFO_DEPTH;
+            r_ptr   <= (r_ptr + 1) & (FIFO_DEPTH - 1);
         end
     end
 
