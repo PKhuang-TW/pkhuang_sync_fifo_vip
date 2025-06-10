@@ -40,7 +40,8 @@ class fifo_scoreboard extends uvm_scoreboard;
                 wr_en   = 0;
                 rd_en   = 0;
                 full    = 0;
-                empty   = 0;
+                empty   = 1;
+                counter = 0;
                 ref_q.delete();
             end
         end
@@ -48,15 +49,35 @@ class fifo_scoreboard extends uvm_scoreboard;
 
     function void write_active ( fifo_seq_item _txn );
         {wr_en, rd_en}  = {_txn.wr_en, _txn.rd_en};
-        if ( wr_en && !full )
+
+        if ( wr_en && !full ) begin
             ref_q.push_back(_txn.din);
+            counter = counter + 1;
+        end else if ( rd_en && !empty ) begin
+            counter = counter - 1;
+        end
+
+        if ( counter == `D_FIFO_DEPTH ) begin
+            full = 1;
+        end else begin
+            full = 0;        
+        end 
+        
+        if ( counter == 0 ) begin
+            empty = 1;
+        end else begin
+            empty = 0;
+        end
     endfunction
 
     function void write_passive ( fifo_seq_item _txn );
-        bit[P_DATA_WIDTH-1:0]   data;
+        bit[`D_DATA_WIDTH-1:0]   data;
 
-        full    = _txn.full;
-        empty   = _txn.empty;
+        if ( full != _txn.full)
+            `uvm_fatal("SCB", $sformatf("Full signal Miscompare!! Get %0d while expected %0d", _txn.full, full))
+
+        if ( empty != _txn.empty)
+            `uvm_fatal("SCB", $sformatf("Empty signal Miscompare!! Get %0d while expected %0d", _txn.empty, empty))
 
         if ( rd_en && !empty ) begin
             data = ref_q.pop_front();
