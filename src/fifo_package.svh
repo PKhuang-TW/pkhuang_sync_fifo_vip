@@ -10,6 +10,7 @@ package fifo_package;
     `include "fifo_config.sv"
     `include "fifo_seq_item.sv"
     `include "fifo_driver.sv"
+    `include "fifo_monitor.sv"
 endpackage
 
 `endif
