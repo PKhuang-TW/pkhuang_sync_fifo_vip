@@ -11,6 +11,7 @@ package fifo_package;
     `include "fifo_seq_item.sv"
     `include "fifo_driver.sv"
     `include "fifo_monitor.sv"
+    `include "fifo_scoreboard.sv"
 endpackage
 
 `endif
