@@ -29,7 +29,7 @@ class fifo_monitor extends uvm_monitor;
         vif = cfg.vif;
     endfunction
 
-    task void run_phase ( uvm_phase phase );
+    virtual task run_phase ( uvm_phase phase );
         forever begin
             @ ( posedge vif.clk );
             txn = fifo_seq_item :: type_id :: create("txn");

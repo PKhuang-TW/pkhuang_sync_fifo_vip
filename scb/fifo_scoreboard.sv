@@ -33,7 +33,7 @@ class fifo_scoreboard extends uvm_scoreboard;
         vif = cfg.vif;
     endfunction
 
-    task void run_phase ( uvm_phase phase );
+    virtual task run_phase ( uvm_phase phase );
         forever begin
             @ ( posedge vif.clk );
             if ( !vif.rst_n ) begin
