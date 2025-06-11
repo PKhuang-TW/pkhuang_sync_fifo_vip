@@ -43,41 +43,45 @@ This VIP supports the following features:
   - After writing to full capacity, `full` is set to `1`, and further writes are blocked.
   - After reading all data, `empty` is set to `1`, and further reads are blocked.
 
+- **Command Timing Constraint**:
+  - Each read or write command is issued on one clock cycle and followed by an idle cycle.
+  - This means each operation takes **2 clock cycles total**: one cycle for the command, one cycle idle.
+  - This design constraint simplifies control timing and prevents back-to-back command execution.
+
 ---
 
 ## 📁 Directory Structure
 ```
 sync_fifo_uvm_vip/
-├── design/
-│   └── rtl.v
 │
 ├── cov/
+│   ├── fifo_cov_item.sv
 │   └── fifo_coverage.sv
 │
-├── tb/
-│   └── tb_top.sv
-│
-├── seq/
-│   ├── rand_read_write_seq.sv
-│   ├── full_write_seq.sv
-│   └── empty_read_seq.sv
-│
-├── src/
-│   ├── fifo_env.sv
-│   ├── fifo_agent.sv
-│   ├── fifo_driver.sv
-│   ├── fifo_monitor.sv
-│   ├── fifo_seq_item.sv
-│   ├── fifo_interface.sv
-│   ├── fifo_package.sv
-│   └── fifo_config.sv
+├── design/
+│   └── rtl.v
 │
 ├── scb/
 │   └── fifo_scoreboard.sv
 │
+├── seq/
+│   └── rand_rw_seq.sv
+│
+├── src/
+│   ├── fifo_agent.sv
+│   ├── fifo_config.sv
+│   ├── fifo_define.svh
+│   ├── fifo_driver.sv
+│   ├── fifo_env.sv
+│   ├── fifo_interface.sv
+│   ├── fifo_monitor.sv
+│   ├── fifo_package.svh
+│   └── fifo_seq_item.sv
+│
+├── tb/
+│   └── tb_top.sv
+│
 └── test/
     ├── fifo_test_base.sv
-    ├── full_write_test.sv
-    ├── empty_read_test.sv
-    └── rand_read_write_test.sv
+    └── rand_rw_test.sv
 ```
