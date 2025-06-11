@@ -37,14 +37,15 @@ class fifo_monitor extends uvm_monitor;
                 txn.wr_en       = vif.wr_en;
                 txn.rd_en       = vif.rd_en;
                 txn.din         = vif.din;
+                @ ( posedge vif.clk );
             end else begin  // agt_mode == UVM_PASSIVE
-                if ( vif.wr_en ) begin
-                    @ ( posedge vif.clk );
-                    txn.full    = vif.full;
-                    txn.empty   = vif.empty;
-                end else if ( vif.rd_en ) begin
+                if ( vif.rd_en ) begin
                     @ ( posedge vif.clk );
                     txn.dout    = vif.dout;
+                    txn.full    = vif.full;
+                    txn.empty   = vif.empty;
+                end else begin
+                    @ ( posedge vif.clk );
                     txn.full    = vif.full;
                     txn.empty   = vif.empty;
                 end

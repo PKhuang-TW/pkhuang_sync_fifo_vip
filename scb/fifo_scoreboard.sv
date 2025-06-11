@@ -10,8 +10,8 @@ class fifo_scoreboard extends uvm_scoreboard;
     `uvm_analysis_imp_decl(_passive)
 
     bit                                                         wr_en, rd_en, full, empty;
-    bit [`D_ADDR_WIDTH-1:0]                                      counter;
-    bit [`D_DATA_WIDTH-1:0]                                      ref_q[$];
+    bit [`D_ADDR_WIDTH:0]                                       counter;
+    bit [`D_DATA_WIDTH-1:0]                                     ref_q[$];
 
     fifo_config                                                 cfg;
     virtual fifo_interface                                      vif;
@@ -48,12 +48,16 @@ class fifo_scoreboard extends uvm_scoreboard;
     endtask
 
     function void write_active ( fifo_seq_item _txn );
-        {wr_en, rd_en}  = {_txn.wr_en, _txn.rd_en};
+        
+        // $display($sformatf("\nWRITE_ACTIVE txn (%0t), counter = %0d:", $time, counter));
+        // _txn.print();
 
-        if ( wr_en && !full ) begin
+        {wr_en, rd_en}  = { (_txn.wr_en && !full), (_txn.rd_en && !empty) };
+
+        if ( wr_en ) begin
             ref_q.push_back(_txn.din);
             counter = counter + 1;
-        end else if ( rd_en && !empty ) begin
+        end else if ( rd_en ) begin
             counter = counter - 1;
         end
 
@@ -71,18 +75,22 @@ class fifo_scoreboard extends uvm_scoreboard;
     endfunction
 
     function void write_passive ( fifo_seq_item _txn );
+
         bit[`D_DATA_WIDTH-1:0]   data;
 
+        // $display($sformatf("\nWRITE_PASSIVE txn (%0t), counter = %0d:", $time, counter));
+        // _txn.print();
+
         if ( full != _txn.full)
-            `uvm_fatal("SCB", $sformatf("Full signal Miscompare!! Get %0d while expected %0d", _txn.full, full))
+            `uvm_fatal("SCB", $sformatf("\"Full\" signal Miscompare!! Get %0d while expected %0d", _txn.full, full))
 
         if ( empty != _txn.empty)
-            `uvm_fatal("SCB", $sformatf("Empty signal Miscompare!! Get %0d while expected %0d", _txn.empty, empty))
+            `uvm_fatal("SCB", $sformatf("\"Empty\" signal Miscompare!! Get %0d while expected %0d", _txn.empty, empty))
 
-        if ( rd_en && !empty ) begin
+        if ( rd_en ) begin
             data = ref_q.pop_front();
             if ( data != _txn.dout )
-                `uvm_fatal("SCB", $sformatf("Data Miscompare!! Get %0d while expected %0d", _txn.dout, data))
+                `uvm_fatal("SCB", $sformatf("Data Miscompare!! Get %h while expected %h", _txn.dout, data))
         end
     endfunction
 
