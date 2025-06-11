@@ -15,12 +15,15 @@ class fifo_scoreboard extends uvm_scoreboard;
 
     fifo_config                                                 cfg;
     virtual fifo_interface                                      vif;
+    fifo_cov_item                                               cov_item;
 
+    uvm_analysis_port #(fifo_cov_item)                          cov_port;
     uvm_analysis_imp_active #(fifo_seq_item, fifo_scoreboard)   imp_active;
     uvm_analysis_imp_passive #(fifo_seq_item, fifo_scoreboard)  imp_passive;
 
     function new (string name = "fifo_scoreboard", uvm_component parent );
         super.new(name, parent);
+        cov_port = new("cov_port", this);
         imp_active = new("imp_active", this);
         imp_passive = new("imp_passive", this);
     endfunction
@@ -92,6 +95,14 @@ class fifo_scoreboard extends uvm_scoreboard;
             if ( data != _txn.dout )
                 `uvm_fatal("SCB", $sformatf("Data Miscompare!! Get %h while expected %h", _txn.dout, data))
         end
+
+        cov_item = fifo_cov_item :: type_id :: create ("cov_item");
+        cov_item.wr_en      = wr_en;
+        cov_item.rd_en      = rd_en;
+        cov_item.full       = full;
+        cov_item.empty      = empty;
+        cov_item.counter    = counter;
+        cov_port.write(cov_item);
     endfunction
 
 endclass
