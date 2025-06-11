@@ -13,8 +13,9 @@ module sync_fifo #(
 );
     localparam ADDR_WIDTH = $clog2(FIFO_DEPTH);
 
-    reg[ADDR_WIDTH-1:0]     counter, w_ptr, r_ptr;
-    reg[DATA_WIDTH-1:0]     fifo[FIFO_DEPTH-1:0];
+    reg [ADDR_WIDTH:0]      counter;
+    reg [ADDR_WIDTH-1:0]    w_ptr, r_ptr;
+    reg [DATA_WIDTH-1:0]    fifo[FIFO_DEPTH-1:0];
 
     assign full     = (counter == FIFO_DEPTH);
     assign empty    = (counter == 0);
@@ -42,7 +43,7 @@ module sync_fifo #(
         if ( !rst_n ) begin
             counter <= 0;
         end else begin
-            case { (wr_en && !full), (rd_en && !empty) }
+            case ({ (wr_en && !full), (rd_en && !empty) })
                 2'b10:   counter <= counter + 1;
                 2'b01:   counter <= counter - 1;
             endcase
