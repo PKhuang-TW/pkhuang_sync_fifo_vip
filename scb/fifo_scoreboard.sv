@@ -60,7 +60,7 @@ class fifo_scoreboard extends uvm_scoreboard;
         if ( counter == `D_FIFO_DEPTH ) begin
             full = 1;
         end else begin
-            full = 0;        
+            full = 0;
         end 
         
         if ( counter == 0 ) begin

@@ -11,8 +11,8 @@ interface fifo_interface(
     logic                       rd_en;
     logic                       full;
     logic                       empty;
-    logic [`D_DATA_WIDTH-1:0]    din;
-    logic [`D_DATA_WIDTH-1:0]    dout;
+    logic [`D_DATA_WIDTH-1:0]   din;
+    logic [`D_DATA_WIDTH-1:0]   dout;
 endinterface
 
 `endif
