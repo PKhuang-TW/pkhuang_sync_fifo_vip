@@ -1,8 +1,6 @@
 `ifndef FIFO_MONITOR_SV
 `define FIFO_MONITOR_SV
 
-import fifo_package::*;
-
 class fifo_monitor extends uvm_monitor;
     `uvm_component_utils(fifo_monitor)
 

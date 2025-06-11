@@ -1,7 +1,7 @@
 `ifndef FIFO_SEQ_ITEM_SV
 `define FIFO_SEQ_ITEM_SV
 
-import fifo_package::*;
+`include "fifo_define.svh"
 
 class fifo_seq_item extends uvm_sequence_item;
 

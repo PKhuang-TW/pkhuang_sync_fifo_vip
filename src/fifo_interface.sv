@@ -1,7 +1,7 @@
 `ifndef FIFO_INTERFACE_SV
 `define FIFO_INTERFACE_SV
 
-import fifo_package::*;
+`include "fifo_define.svh"
 
 interface fifo_interface(
     input   wire    clk,

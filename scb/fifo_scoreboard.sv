@@ -1,7 +1,7 @@
 `ifndef FIFO_SCOREBOARD_SV
 `define FIFO_SCOREBOARD_SV
 
-import fifo_package::*;
+`include "fifo_define.svh"
 
 class fifo_scoreboard extends uvm_scoreboard;
     `uvm_component_utils(fifo_scoreboard)

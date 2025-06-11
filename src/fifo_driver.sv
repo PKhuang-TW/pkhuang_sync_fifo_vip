@@ -1,8 +1,6 @@
 `ifndef FIFO_DRIVER_SV
 `define FIFO_DRIVER_SV
 
-import fifo_package::*;
-
 class fifo_driver extends uvm_driver #(fifo_seq_item);
     `uvm_component_utils(fifo_driver)
 
