@@ -50,6 +50,12 @@ This VIP supports the following features:
 
 ---
 
+### 📷 FIFO Block Diagram
+
+![FIFO Block Diagram](fifo_diagram.png)
+
+---
+
 ## 📁 Directory Structure
 ```
 sync_fifo_uvm_vip/
