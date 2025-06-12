@@ -52,7 +52,7 @@ This VIP supports the following features:
 
 ### 📷 FIFO Block Diagram
 
-![FIFO Block Diagram](fifo_diagram.png)
+![FIFO Block Diagram](fifo_diagram.jpg)
 
 ---
 
